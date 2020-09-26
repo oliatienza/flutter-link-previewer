@@ -106,15 +106,19 @@ class WebPageParser {
   }
 
   static String _addWWWPrefixIfNotExists(String uri) {
-    if (uri == null || uri == "") {
-      return uri;
-    }
+    try {
+      if (uri == null || uri == "") {
+        return uri;
+      }
 
-    Uri prefixUri;
-    Uri parsedUri = Uri.parse(uri);
-    if (!parsedUri.host.startsWith('www')) {
-      prefixUri = parsedUri.replace(host: 'www.' + parsedUri.host);
+      Uri prefixUri;
+      Uri parsedUri = Uri.parse(uri);
+      if (!parsedUri.host.startsWith('www')) {
+        prefixUri = parsedUri.replace(host: 'www.' + parsedUri.host);
+      }
+      return prefixUri.toString();
+    } catch (e) {
+      return '';
     }
-    return prefixUri.toString();
   }
 }
