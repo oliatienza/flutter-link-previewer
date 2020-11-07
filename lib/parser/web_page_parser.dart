@@ -78,7 +78,11 @@ class WebPageParser {
     if (description != null && description != "") {
       return description;
     } else {
-      description = document.head.getElementsByTagName("title")[0].text;
+      if (document.head.getElementsByTagName("title").length > 0) {
+        description = document.head.getElementsByTagName("title")[0].text;
+      } else {
+        description = 'Description could not be loaded';
+      }
     }
     return description;
   }
