@@ -61,7 +61,7 @@ class WebPageParser {
     if (titleTags.isNotEmpty && titleTags.first != null) {
       return titleTags.first.text;
     }
-    return "";
+    return 'Title could not be loaded';
   }
 
   static String _scrapeDescription(Document document) {
