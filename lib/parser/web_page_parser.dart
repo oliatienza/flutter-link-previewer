@@ -110,12 +110,24 @@ class WebPageParser {
       if (!imageSrc.startsWith("http")) {
         imageSrc = "http://" + _extractHost(url) + imageSrc;
       }
+    } else {
+      // Check in html head meta
+      var meta = document.getElementsByTagName("meta");
+      var metaDescription = meta.firstWhere(
+          (e) => e.attributes["property"] == "og:image",
+          orElse: () => null);
+
+      if (metaDescription != null) {
+        imageSrc = metaDescription.attributes["content"];
+      }
     }
+
     if (imageSrc == "") {
       print("WARNING - WebPageParser - " + url);
       print(
           "WARNING - WebPageParser - image might be empty. Tag <img> was not found.");
     }
+
     return imageSrc;
   }
 
