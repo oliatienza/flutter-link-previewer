@@ -57,18 +57,32 @@ class WebPageParser {
   }
 
   static String _scrapeTitle(Document document) {
+    var meta = document.getElementsByTagName("meta");
+    var title = "";
+    var metaDescription = meta.firstWhere(
+        (e) =>
+            e.attributes["name"] == "title" ||
+            e.attributes["property"] == "og:title",
+        orElse: () => null);
+
+    if (metaDescription != null) {
+      title = metaDescription.attributes["content"];
+    }
+
     var titleTags = document.head.getElementsByTagName("title");
     if (titleTags.isNotEmpty && titleTags.first != null) {
-      return titleTags.first.text;
+      title = titleTags.first.text;
     }
-    return 'Title could not be loaded';
+    return title.isEmpty ? 'Title could not be loaded' : title;
   }
 
   static String _scrapeDescription(Document document) {
     var meta = document.getElementsByTagName("meta");
     var description = "";
     var metaDescription = meta.firstWhere(
-        (e) => e.attributes["name"] == "description",
+        (e) =>
+            e.attributes["name"] == "description" ||
+            e.attributes["property"] == "og:description",
         orElse: () => null);
 
     if (metaDescription != null) {
