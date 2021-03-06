@@ -2,7 +2,7 @@ part of link_previewer;
 
 class WebPageParser {
   static Future<Map> getData(String url) async {
-    var response = await http.get(url);
+    var response = await http.get(Uri.parse(url));
 
     return getDataFromResponse(response, url);
   }
