@@ -4,6 +4,8 @@ class WebPageParser {
   static Future<Map> getData(String url) async {
     var response = await http.get(Uri.parse(url));
 
+    if (response.contentLength > 1000000) return {};
+
     return getDataFromResponse(response, url);
   }
 
